@@ -1,111 +1,143 @@
-    #include <stdio.h>  
-    #include <stdlib.h>
-    #include <string.h>
-       
-    //Represent a node of the doubly linked list  
-      
-    struct node{  
-        char data[50];  
-        struct node *previous;  
-        struct node *next;  
-    };      
-       
-    //Represent the head and tail of the doubly linked list  
-    struct node *head, *tail = NULL;  
-       
-    //addNode() will add a node to the list  
-    void addNode(char *data) {  
-        //Create a new node  
-        struct node *newNode = (struct node*)malloc(sizeof(struct node));  
-        strcpy(newNode->data,data);
-          
-        //If list is empty  
-        if(head == NULL) {  
-            //Both head and tail will point to newNode  
-            head = tail = newNode;  
-            //head's previous will point to NULL  
-            head->previous = NULL;  
-            //tail's next will point to NULL, as it is the last node of the list  
-            tail->next = NULL;  
-        }  
-        else {  
-            //newNode will be added after tail such that tail's next will point to newNode  
-            tail->next = newNode;  
-            //newNode's previous will point to tail  
-            newNode->previous = tail;  
-            //newNode will become new tail  
-            tail = newNode;  
-            //As it is last node, tail's next will point to NULL  
-            tail->next = NULL;  
-        }  
-    }  
-       
-    //sortList() will sort the given list in ascending order  
-    void sortList() {  
-        struct node *current = NULL, *index = NULL;  
-        char temp[50];  
-        //Check whether list is empty  
-        if(head == NULL) {  
-            return;  
-        }  
-        else {  
-            //Current will point to head  
-            for(current = head; current->next != NULL; current = current->next) {  
-                //Index will point to node next to current  
-                for(index = current->next; index != NULL; index = index->next) {  
-                    //If current's data is greater than index's data, swap the data of current and index 
-                    if(current->data[0] > index->data[0]) {  
-                        strcpy(temp,current->data);
-                        strcpy(current->data,index->data);
-                        strcpy(index->data,temp);
-                    }  
-                }  
-            }  
-        }  
-    }  
-       
-    //display() will print out the nodes of the list  
-    void display() {  
-        //Node current will point to head  
-        struct node *current = head;  
-        if(head == NULL) {  
-            printf("List is empty\n");  
-            return;  
-        }  
-        while(current != NULL) {  
-            //Prints each node by incrementing pointer.  
-            printf("%s ",current->data);  
-            current = current->next;  
-        }  
-        printf("\n");  
-    }  
-       
-    int main()  
-    {  
-        //Add nodes to the list  
-     //    char aux[100];
-     //    printf("Digite o Nome: ");
-     //    gets(aux);
-        addNode("misha");
-        addNode("amy");
-        addNode("tom");
-        addNode("jade");
-        addNode("maia");
-        addNode("mel");
-     //    addNode(4);  
-     //    addNode(5);  
-     //    addNode(2);  
-          
-     //    //Displaying original list  
-        printf("Original list: \n");  
-        display();  
-          
-     //    //Sorting list  
-        sortList();  
-          
-     //    //Displaying sorted list  
-        printf("Sorted list: \n");  
-        display();  
-       
-        return 0;  
-    }  
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+//Represent a contato of the doubly linked list
+
+struct contato
+{
+    char nome[50];
+    char email[50];
+    char telefone[50];
+    struct contato *previous;
+    struct contato *next;
+};
+
+//Represent the head and tail of the doubly linked list
+struct contato *head, *tail = NULL;
+
+//addcontato() will add a contato to the list
+void addcontato(struct contato *pessoa)
+{
+    //Create a new contato
+    struct contato *newcontato = (struct contato *)malloc(sizeof(struct contato));
+    strcpy(newcontato->nome, pessoa->nome);
+    strcpy(newcontato->email, pessoa->email);
+    strcpy(newcontato->telefone, pessoa->telefone);
+    //If list is empty
+    if (head == NULL)
+    {
+        //Both head and tail will point to newcontato
+        head = tail = newcontato;
+        //head's previous will point to NULL
+        head->previous = NULL;
+        //tail's next will point to NULL, as it is the last contato of the list
+        tail->next = NULL;
+    }
+    else
+    {
+        //newcontato will be added after tail such that tail's next will point to newcontato
+        tail->next = newcontato;
+        //newcontato's previous will point to tail
+        newcontato->previous = tail;
+        //newcontato will become new tail
+        tail = newcontato;
+        //As it is last contato, tail's next will point to NULL
+        tail->next = NULL;
+    }
+}
+
+//sortList() will sort the given list in ascending order
+void sortList()
+{
+    struct contato *current = NULL, *index = NULL;
+    char temp[50];
+    //Check whether list is empty
+    if (head == NULL)
+    {
+        return;
+    }
+    else
+    {
+        //Current will point to head
+        for (current = head; current->next != NULL; current = current->next)
+        {
+            //Index will point to contato next to current
+            for (index = current->next; index != NULL; index = index->next)
+            {
+                //If current's nome is greater than index's nome, swap the nome of current and index
+                if (current->nome[0] > index->nome[0])
+                {
+                    strcpy(temp, current->nome);
+                    strcpy(current->nome, index->nome);
+                    strcpy(index->nome, temp);
+                }
+            }
+        }
+    }
+}
+
+//display() will print out the contatos of the list
+void display()
+{
+    //contato current will point to head
+    struct contato *current = head;
+    if (head == NULL)
+    {
+        printf("List is empty\n");
+        return;
+    }
+    while (current != NULL)
+    {
+        //Prints each contato by incrementing pointer.
+        printf("%s ", current->nome);
+        current = current->next;
+    }
+    printf("\n");
+}
+
+int main()
+{
+    struct contato *pessoa = (struct contato *)malloc(sizeof(struct contato));
+    //Add contatos to the list
+    strcpy(pessoa->nome, "misha");
+    strcpy(pessoa->email, "misha@email.com");
+    strcpy(pessoa->telefone, "000");
+    addcontato(pessoa);
+
+    strcpy(pessoa->nome, "amy");
+    strcpy(pessoa->email, "amy@email.com");
+    strcpy(pessoa->telefone, "000");
+    addcontato(pessoa);
+
+    strcpy(pessoa->nome, "tom");
+    strcpy(pessoa->email, "tom@email.com");
+    strcpy(pessoa->telefone, "000");
+    addcontato(pessoa);
+
+    strcpy(pessoa->nome, "jade");
+    strcpy(pessoa->email, "jade@email.com");
+    strcpy(pessoa->telefone, "000");
+    addcontato(pessoa);
+
+    strcpy(pessoa->nome, "maia");
+    strcpy(pessoa->email, "maia@email.com");
+    strcpy(pessoa->telefone, "000");
+    addcontato(pessoa);
+
+    strcpy(pessoa->nome, "mel");
+    strcpy(pessoa->email, "mel@email.com");
+    strcpy(pessoa->telefone, "000");
+    addcontato(pessoa);
+
+    //    //Displaying original list
+    printf("Original list: \n");
+    display();
+    //    //Sorting list
+    sortList();
+    //    //Displaying sorted list
+    printf("Sorted list: \n");
+    display();
+
+    return 0;
+}
