@@ -66,12 +66,19 @@ void sortList()
             for (index = current->next; index != NULL; index = index->next)
             {
                 //If current's nome is greater than index's nome, swap the nome of current and index
-                if (current->nome[0] > index->nome[0])
-                {
-                    strcpy(temp, current->nome);
-                    strcpy(current->nome, index->nome);
-                    strcpy(index->nome, temp);
-                }
+                int n = 0;
+                while (n < strlen(current->nome))
+                {   
+                    if(current->nome[n] > index->nome[n]){
+                        strcpy(temp, current->nome);
+                        strcpy(current->nome, index->nome);
+                        strcpy(index->nome, temp);
+                    } 
+                    if(current->nome[n] != index->nome[n]){
+                        break;
+                    }
+                    n++;
+                };
             }
         }
     }
