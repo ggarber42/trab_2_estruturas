@@ -103,6 +103,10 @@ void display()
     printf("\n");
 }
 
+void getContato(){};
+
+void deleteContato(){};
+
 int main()
 {
     struct contato *pessoa = (struct contato *)malloc(sizeof(struct contato));
