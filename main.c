@@ -207,47 +207,5 @@ int main()
         }
         sortLista();
     }
-
-    // strcpy(pessoa->nome, "misha");
-    // strcpy(pessoa->email, "misha@email.com");
-    // strcpy(pessoa->telefone, "000");
-    // addcontato(pessoa);
-
-    // strcpy(pessoa->nome, "amy");
-    // strcpy(pessoa->email, "amy@email.com");
-    // strcpy(pessoa->telefone, "000");
-    // addcontato(pessoa);
-
-    // strcpy(pessoa->nome, "tom");
-    // strcpy(pessoa->email, "tom@email.com");
-    // strcpy(pessoa->telefone, "000");
-    // addcontato(pessoa);
-
-    // strcpy(pessoa->nome, "jade");
-    // strcpy(pessoa->email, "jade@email.com");
-    // strcpy(pessoa->telefone, "000");
-    // addcontato(pessoa);
-
-    // strcpy(pessoa->nome, "maia");
-    // strcpy(pessoa->email, "maia@email.com");
-    // strcpy(pessoa->telefone, "000");
-    // addcontato(pessoa);
-
-    // strcpy(pessoa->nome, "mel");
-    // strcpy(pessoa->email, "mel@email.com");
-    // strcpy(pessoa->telefone, "000");
-    // addcontato(pessoa);
-
-    //    //Displaying original list
-    // printf("Original list: \n");
-    // display();
-    //    //Sorting list
-    // sortList();
-    //    //Displaying sorted list
-    // printf("Sorted list: \n");
-    // display();
-    // getContato(3);
-    // deleteContato(1);
-    // display();
     return 0;
 }
