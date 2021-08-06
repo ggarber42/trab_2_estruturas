@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 struct contato
 {
@@ -34,7 +35,7 @@ void addcontato(struct contato *pessoa)
     }
 }
 
-void sortList()
+void sortLista()
 {
     struct contato *current = NULL, *index = NULL;
     char temp[50];
@@ -68,20 +69,26 @@ void sortList()
     }
 }
 
-void display()
+void displayLista()
 {
     struct contato *current = head;
+    int posicaoLista = 1;
     if (head == NULL)
     {
-        printf("List is empty\n");
+        printf("\nA lista esta vazia\n\n");
         return;
     }
+    printf("\n***\n");
     while (current != NULL)
-    {
-        printf("%s ", current->nome);
+    {   
+        printf("%d- ",posicaoLista);
+        printf("Nome: %s, ", current->nome);
+        printf("Email: %s, ", current->email);
+        printf("Telefone: %s\n", current->telefone);
         current = current->next;
+        posicaoLista++;
     }
-    printf("\n");
+    printf("***\n");
 }
 
 void getContato(int posicao)
@@ -97,7 +104,11 @@ void getContato(int posicao)
         current = current->next;
     }
 
-    printf("%s\n", current->nome);
+    printf("\n***\n");
+    printf("Nome: %s, ", current->nome);
+    printf("Email: %s, ", current->email);
+    printf("Telefone: %s\n", current->telefone);
+    printf("***\n");
 };
 
 void deleteContato(int posicao)
@@ -120,7 +131,6 @@ void deleteContato(int posicao)
     {
         return;
     }
-
     if (head == current)
     {
         head = current->next;
@@ -136,50 +146,100 @@ void deleteContato(int posicao)
     free(current);
 };
 
+void showMenu()
+{
+    printf("Escolha uma das opcoes abaixo\n");
+    printf("1 - Inserir contato\n");
+    printf("2 - Consultar contato de uma determinada posicao\n");
+    printf("3 - Remover contato de uma determinada posicao\n");
+    printf("4 - Listar contatos\n");
+    printf("5 - Sair\n");
+    printf("Digite aqui sua opcao: ");
+}
+
 int main()
 {
     struct contato *pessoa = (struct contato *)malloc(sizeof(struct contato));
-    //Add contatos to the list
-    strcpy(pessoa->nome, "misha");
-    strcpy(pessoa->email, "misha@email.com");
-    strcpy(pessoa->telefone, "000");
-    addcontato(pessoa);
+    char aux[50];
+    int opcao, posicao;
+    bool flag = true;
+    while (flag)
+    {
+        showMenu();
+        scanf("%i", &opcao);
+        switch (opcao)
+        {
+        case 1:
+            printf("Digite o Nome: ");
+            scanf("%s", pessoa->nome);
+            printf("Digite o email: ");
+            scanf("%s", pessoa->email);
+            printf("Digite o telefone: ");
+            scanf("%s", pessoa->telefone);
+            addcontato(pessoa);
+            break;
+        case 2:
+            printf("Digite a posicao: ");
+            scanf("%d", &posicao);
+            getContato(posicao);
+            break;
+        case 3:
+            printf("Digite a posicao: ");
+            scanf("%d", &posicao);
+            deleteContato(posicao);
+            break;
+        case 4:
+            displayLista();
+            break;
+        case 5:
+            flag = false;
+            break;
+        default:
+            break;
+        }
+        sortLista();
+    }
 
-    strcpy(pessoa->nome, "amy");
-    strcpy(pessoa->email, "amy@email.com");
-    strcpy(pessoa->telefone, "000");
-    addcontato(pessoa);
+    // strcpy(pessoa->nome, "misha");
+    // strcpy(pessoa->email, "misha@email.com");
+    // strcpy(pessoa->telefone, "000");
+    // addcontato(pessoa);
 
-    strcpy(pessoa->nome, "tom");
-    strcpy(pessoa->email, "tom@email.com");
-    strcpy(pessoa->telefone, "000");
-    addcontato(pessoa);
+    // strcpy(pessoa->nome, "amy");
+    // strcpy(pessoa->email, "amy@email.com");
+    // strcpy(pessoa->telefone, "000");
+    // addcontato(pessoa);
 
-    strcpy(pessoa->nome, "jade");
-    strcpy(pessoa->email, "jade@email.com");
-    strcpy(pessoa->telefone, "000");
-    addcontato(pessoa);
+    // strcpy(pessoa->nome, "tom");
+    // strcpy(pessoa->email, "tom@email.com");
+    // strcpy(pessoa->telefone, "000");
+    // addcontato(pessoa);
 
-    strcpy(pessoa->nome, "maia");
-    strcpy(pessoa->email, "maia@email.com");
-    strcpy(pessoa->telefone, "000");
-    addcontato(pessoa);
+    // strcpy(pessoa->nome, "jade");
+    // strcpy(pessoa->email, "jade@email.com");
+    // strcpy(pessoa->telefone, "000");
+    // addcontato(pessoa);
 
-    strcpy(pessoa->nome, "mel");
-    strcpy(pessoa->email, "mel@email.com");
-    strcpy(pessoa->telefone, "000");
-    addcontato(pessoa);
+    // strcpy(pessoa->nome, "maia");
+    // strcpy(pessoa->email, "maia@email.com");
+    // strcpy(pessoa->telefone, "000");
+    // addcontato(pessoa);
+
+    // strcpy(pessoa->nome, "mel");
+    // strcpy(pessoa->email, "mel@email.com");
+    // strcpy(pessoa->telefone, "000");
+    // addcontato(pessoa);
 
     //    //Displaying original list
-    printf("Original list: \n");
-    display();
+    // printf("Original list: \n");
+    // display();
     //    //Sorting list
-    sortList();
+    // sortList();
     //    //Displaying sorted list
-    printf("Sorted list: \n");
-    display();
-    getContato(3);
-    deleteContato(1);
-    display();
+    // printf("Sorted list: \n");
+    // display();
+    // getContato(3);
+    // deleteContato(1);
+    // display();
     return 0;
 }
