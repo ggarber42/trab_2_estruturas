@@ -68,13 +68,15 @@ void sortList()
                 //If current's nome is greater than index's nome, swap the nome of current and index
                 int n = 0;
                 while (n < strlen(current->nome))
-                {   
-                    if(current->nome[n] > index->nome[n]){
+                {
+                    if (current->nome[n] > index->nome[n])
+                    {
                         strcpy(temp, current->nome);
                         strcpy(current->nome, index->nome);
                         strcpy(index->nome, temp);
-                    } 
-                    if(current->nome[n] != index->nome[n]){
+                    }
+                    if (current->nome[n] != index->nome[n])
+                    {
                         break;
                     }
                     n++;
@@ -103,9 +105,71 @@ void display()
     printf("\n");
 }
 
-void getContato(){};
+void getContato(int posicao)
+{
+    struct contato *current = head;
+    /* if list in NULL or invalid position is given */
+    if (posicao <= 0 || head == NULL)
+    {
+        return;
+    }
+    /* traverse up to the node at position 'n' from
+       the beginning */
+    int i;
+    for (int i = 1; current != NULL && i < posicao; i++)
+    {
+        current = current->next;
+    }
 
-void deleteContato(){};
+    printf("%s\n", current->nome);
+};
+
+void deleteContato(int posicao)
+{
+    struct contato *current = head;
+    /* if list in NULL or invalid position is given */
+    if (posicao <= 0 || head == NULL)
+    {
+        return;
+    }
+    /* traverse up to the node at position 'n' from
+       the beginning */
+    int i;
+    for (int i = 1; current != NULL && i < posicao; i++)
+    {
+        current = current->next;
+    }
+
+    /* if 'n' is greater than the number of nodes
+       in the doubly linked list */
+    if (current == NULL)
+    {
+        return;
+    }
+    /* delete the node pointed to by 'current' */
+    // deleteNode(head_ref, current);
+
+    /* base case */
+    if (head == NULL || current == NULL)
+        return;
+
+    /* If node to be deleted is head node */
+    if (head == current)
+        head = current->next;
+
+    /* Change next only if node to be deleted is NOT
+       the last node */
+    if (current->next != NULL)
+        current->next->previous = current->previous;
+
+    /* Change prev only if node to be deleted is NOT
+       the first node */
+    if (current->previous != NULL)
+        current->previous->next = current->next;
+
+    /* Finally, free the memory occupied by del*/
+    free(current);
+};
 
 int main()
 {
@@ -149,6 +213,8 @@ int main()
     //    //Displaying sorted list
     printf("Sorted list: \n");
     display();
-
+    getContato(3);
+    deleteContato(1);
+    display();
     return 0;
 }
