@@ -55,8 +55,16 @@ void sortLista()
                     if (current->nome[n] > index->nome[n])
                     {
                         strcpy(temp, current->nome);
+                        strcpy(temp, current->email);
+                        strcpy(temp, current->telefone);
+
                         strcpy(current->nome, index->nome);
+                        strcpy(current->email, index->email);
+                        strcpy(current->telefone, index->telefone);
+
                         strcpy(index->nome, temp);
+                        strcpy(index->email, temp);
+                        strcpy(index->telefone, temp);
                     }
                     if (current->nome[n] != index->nome[n])
                     {
