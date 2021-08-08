@@ -14,6 +14,16 @@ struct contato
 
 struct contato *head, *tail = NULL;
 
+void avisoListaVazia()
+{
+    printf("\nA lista esta vazia\n\n");
+}
+
+void avisoPosicaoInexistente()
+{
+    printf("\nEssa posicao nao existe\n\n");
+}
+
 void addcontato(struct contato *pessoa)
 {
     struct contato *newcontato = (struct contato *)malloc(sizeof(struct contato));
@@ -83,13 +93,13 @@ void displayLista()
     int posicaoLista = 1;
     if (head == NULL)
     {
-        printf("\nA lista esta vazia\n\n");
+        avisoListaVazia();
         return;
     }
     printf("\n***\n");
     while (current != NULL)
-    {   
-        printf("%d- ",posicaoLista);
+    {
+        printf("%d- ", posicaoLista);
         printf("Nome: %s, ", current->nome);
         printf("Email: %s, ", current->email);
         printf("Telefone: %s\n", current->telefone);
@@ -104,19 +114,28 @@ void getContato(int posicao)
     struct contato *current = head;
     if (posicao <= 0 || head == NULL)
     {
+        avisoListaVazia();
         return;
     }
     int i;
     for (int i = 1; current != NULL && i < posicao; i++)
     {
         current = current->next;
+
     }
 
-    printf("\n***\n");
-    printf("Nome: %s, ", current->nome);
-    printf("Email: %s, ", current->email);
-    printf("Telefone: %s\n", current->telefone);
-    printf("***\n");
+    if (current == NULL)
+    {
+        avisoPosicaoInexistente();
+    }
+    else
+    {
+        printf("\n***\n");
+        printf("Nome: %s, ", current->nome);
+        printf("Email: %s, ", current->email);
+        printf("Telefone: %s\n", current->telefone);
+        printf("***\n");
+    }
 };
 
 void deleteContato(int posicao)
@@ -124,6 +143,7 @@ void deleteContato(int posicao)
     struct contato *current = head;
     if (posicao <= 0 || head == NULL)
     {
+        avisoListaVazia();
         return;
     }
     int i;
@@ -131,12 +151,9 @@ void deleteContato(int posicao)
     {
         current = current->next;
     }
-    if (current == NULL)
-    {
-        return;
-    }
     if (head == NULL || current == NULL)
     {
+        avisoPosicaoInexistente();
         return;
     }
     if (head == current)
