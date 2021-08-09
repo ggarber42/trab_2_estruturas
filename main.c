@@ -48,9 +48,9 @@ void addcontato(struct contato *pessoa)
 void sortLista()
 {
     struct contato *current = NULL, *index = NULL;
-    char temp[50];
+    struct contato *temp = (struct contato *)malloc(sizeof(struct contato));
     if (head == NULL)
-    {
+    {   
         return;
     }
     else
@@ -64,17 +64,17 @@ void sortLista()
                 {
                     if (current->nome[n] > index->nome[n])
                     {
-                        strcpy(temp, current->nome);
-                        strcpy(temp, current->email);
-                        strcpy(temp, current->telefone);
+                        strcpy(temp->nome, current->nome);
+                        strcpy(temp->email, current->email);
+                        strcpy(temp->telefone, current->telefone);
 
                         strcpy(current->nome, index->nome);
                         strcpy(current->email, index->email);
                         strcpy(current->telefone, index->telefone);
 
-                        strcpy(index->nome, temp);
-                        strcpy(index->email, temp);
-                        strcpy(index->telefone, temp);
+                        strcpy(index->nome, temp->nome);
+                        strcpy(index->email, temp->email);
+                        strcpy(index->telefone, temp->telefone);
                     }
                     if (current->nome[n] != index->nome[n])
                     {
@@ -185,7 +185,6 @@ void showMenu()
 int main()
 {
     struct contato *pessoa = (struct contato *)malloc(sizeof(struct contato));
-    char aux[50];
     int opcao, posicao;
     bool flag = true;
     while (flag)

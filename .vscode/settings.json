@@ -1,0 +1,7 @@
+{
+     "files.associations": {
+          "*.js ": "javascript",
+          "*.fugly": "handlebars",
+          "typeinfo": "c"
+     }
+}
