@@ -45,47 +45,6 @@ void addcontato(struct contato *pessoa)
     }
 }
 
-void sortLista()
-{
-    struct contato *current = NULL, *index = NULL;
-    struct contato *temp = (struct contato *)malloc(sizeof(struct contato));
-    if (head == NULL)
-    {   
-        return;
-    }
-    else
-    {
-        for (current = head; current->next != NULL; current = current->next)
-        {
-            for (index = current->next; index != NULL; index = index->next)
-            {
-                int n = 0;
-                while (n < strlen(current->nome))
-                {
-                    if (current->nome[n] > index->nome[n])
-                    {
-                        strcpy(temp->nome, current->nome);
-                        strcpy(temp->email, current->email);
-                        strcpy(temp->telefone, current->telefone);
-
-                        strcpy(current->nome, index->nome);
-                        strcpy(current->email, index->email);
-                        strcpy(current->telefone, index->telefone);
-
-                        strcpy(index->nome, temp->nome);
-                        strcpy(index->email, temp->email);
-                        strcpy(index->telefone, temp->telefone);
-                    }
-                    if (current->nome[n] != index->nome[n])
-                    {
-                        break;
-                    }
-                    n++;
-                };
-            }
-        }
-    }
-}
 
 void displayLista()
 {
@@ -121,7 +80,6 @@ void getContato(int posicao)
     for (int i = 1; current != NULL && i < posicao; i++)
     {
         current = current->next;
-
     }
 
     if (current == NULL)
@@ -171,6 +129,79 @@ void deleteContato(int posicao)
     free(current);
 };
 
+int getNovaPosicao(struct contato *newcontato)
+{
+
+    struct contato *current = head;
+    int pos = 0;
+    if (current == NULL)
+    {
+        return pos;
+    }
+    else
+    {
+        while (current != NULL)
+        {
+            int n = 0;
+            while (n < strlen(newcontato->nome))
+            {
+                if (newcontato->nome[n] < current->nome[n])
+                {
+                    return pos;
+                }
+                n++;
+            }
+            pos++;
+            current = current->next;
+        }
+    }
+    return pos;
+}
+
+void addContatoEmPosicao(struct contato *pessoa)
+{
+    int pos = getNovaPosicao(pessoa);
+    struct contato *newcontato = (struct contato *)malloc(sizeof(struct contato));
+    struct contato *temp = (struct contato *)malloc(sizeof(struct contato));
+    strcpy(newcontato->nome, pessoa->nome);
+    strcpy(newcontato->email, pessoa->email);
+    strcpy(newcontato->telefone, pessoa->telefone);
+    if (head == NULL)
+    {
+        head = tail = newcontato;
+        head->previous = NULL;
+        tail->next = NULL;
+    }
+    else
+    {
+        struct contato *current = head;
+        if (current->next == NULL && pos == 1)
+        {
+            current->next = newcontato;
+            newcontato->previous = current;
+            newcontato->next = NULL;
+        }
+        else if (current->next == NULL && pos == 0)
+        {
+            head = newcontato;
+            current->previous = newcontato;
+            newcontato->next = current;
+            newcontato->previous = NULL;
+        }
+        else
+        {
+            int i;
+            for (int i = 1; current != NULL && i < pos; i++)
+            {
+                current = current->next;
+            }
+            newcontato->next = current->next;
+            newcontato->previous = current;
+            current->next = newcontato;
+        }
+    }
+}
+
 void showMenu()
 {
     printf("Escolha uma das opcoes abaixo\n");
@@ -200,7 +231,8 @@ int main()
             scanf("%s", pessoa->email);
             printf("Digite o telefone: ");
             scanf("%s", pessoa->telefone);
-            addcontato(pessoa);
+            // addcontato(pessoa);
+            addContatoEmPosicao(pessoa);
             break;
         case 2:
             printf("Digite a posicao: ");
@@ -221,7 +253,6 @@ int main()
         default:
             break;
         }
-        sortLista();
     }
     return 0;
 }
