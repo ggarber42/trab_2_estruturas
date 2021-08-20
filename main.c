@@ -181,7 +181,7 @@ void addContatoEmPosicao(struct contato *pessoa)
             newcontato->previous = current;
             newcontato->next = NULL;
         }
-        else if (current->next == NULL && pos == 0)
+        else if (current->next == NULL || pos == 0)
         {
             head = newcontato;
             current->previous = newcontato;
