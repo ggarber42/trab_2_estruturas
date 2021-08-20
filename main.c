@@ -231,7 +231,6 @@ int main()
             scanf("%s", pessoa->email);
             printf("Digite o telefone: ");
             scanf("%s", pessoa->telefone);
-            // addcontato(pessoa);
             addContatoEmPosicao(pessoa);
             break;
         case 2:
