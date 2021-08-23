@@ -12,7 +12,19 @@ struct contato
      struct contato *next;
 };
 
-struct contato *head, *tail = NULL;
+// struct contato *head, *tail = NULL;
+
+
+ struct header{
+	struct contato* head;//primeiro
+	struct contato* tail;//ultimo
+};
+
+void initLista (struct header *lista){
+    lista->head = NULL;
+    lista->tail = NULL;
+}
+
 
 void avisoListaVazia()
 {
@@ -24,32 +36,11 @@ void avisoPosicaoInexistente()
      printf("\nEssa posicao nao existe\n\n");
 }
 
-void addcontato(struct contato *pessoa)
+void displayLista( struct header *lista)
 {
-     struct contato *newcontato = (struct contato *)malloc(sizeof(struct contato));
-     strcpy(newcontato->nome, pessoa->nome);
-     strcpy(newcontato->email, pessoa->email);
-     strcpy(newcontato->telefone, pessoa->telefone);
-     if (head == NULL)
-     {
-          head = tail = newcontato;
-          head->previous = NULL;
-          tail->next = NULL;
-     }
-     else
-     {
-          tail->next = newcontato;
-          newcontato->previous = tail;
-          tail = newcontato;
-          tail->next = NULL;
-     }
-}
-
-void displayLista()
-{
-     struct contato *current = head;
+     struct contato *current = lista->head;
      int posicaoLista = 1;
-     if (head == NULL)
+     if (lista->head == NULL)
      {
           avisoListaVazia();
           return;
@@ -67,10 +58,10 @@ void displayLista()
      printf("***\n");
 }
 
-void getContato(int posicao)
+void getContato(int posicao, struct header *lista)
 {
-     struct contato *current = head;
-     if (posicao <= 0 || head == NULL)
+     struct contato *current = lista->head;
+     if (posicao <= 0 || lista->head == NULL)
      {
           avisoListaVazia();
           return;
@@ -95,10 +86,10 @@ void getContato(int posicao)
      }
 };
 
-void deleteContato(int posicao)
+void deleteContato(int posicao, struct header *lista)
 {
-     struct contato *current = head;
-     if (posicao <= 0 || head == NULL)
+     struct contato *current = lista->head;
+     if (posicao <= 0 || lista->head == NULL)
      {
           avisoListaVazia();
           return;
@@ -108,14 +99,14 @@ void deleteContato(int posicao)
      {
           current = current->next;
      }
-     if (head == NULL || current == NULL)
+     if (lista->head == NULL || current == NULL)
      {
           avisoPosicaoInexistente();
           return;
      }
-     if (head == current)
+     if (lista->head == current)
      {
-          head = current->next;
+          lista->head = current->next;
      }
      if (current->next != NULL)
      {
@@ -128,17 +119,16 @@ void deleteContato(int posicao)
      free(current);
 };
 
-int getNovaPosicao(struct contato *newcontato)
+int getNovaPosicao(struct contato *newcontato, struct header *lista)
 {
-
-     struct contato *current = head;
      int pos = 0;
-     if (current == NULL)
+     if (lista->head == NULL)
      {
           return pos;
      }
      else
      {
+          struct contato *current = lista->head;
           while (current != NULL)
           {
 
@@ -158,26 +148,24 @@ int getNovaPosicao(struct contato *newcontato)
      return pos;
 }
 
-void addContatoEmPosicao(struct contato *pessoa)
+void addContatoEmPosicao(struct contato *pessoa, int pos, struct header *lista)
 {
-     int pos = getNovaPosicao(pessoa);
+     // int pos = getNovaPosicao(pessoa, &lista);
 
-     printf("\n POSICAO: %d \n", pos);
+     // printf("\n POSICAO: %d \n", pos);
 
      struct contato *newcontato = (struct contato *)malloc(sizeof(struct contato));
      struct contato *temp = (struct contato *)malloc(sizeof(struct contato));
      strcpy(newcontato->nome, pessoa->nome);
      strcpy(newcontato->email, pessoa->email);
      strcpy(newcontato->telefone, pessoa->telefone);
-     if (head == NULL)
+     if (lista->head == NULL)
      {
-          head = tail = newcontato;
-          head->previous = NULL;
-          tail->next = NULL;
+          lista->head = lista->tail = newcontato;
      }
      else
      {
-          struct contato *current = head;
+          struct contato *current = lista->head;
           if (current->next == NULL && pos == 1)
           {
                current->next = newcontato;
@@ -186,7 +174,7 @@ void addContatoEmPosicao(struct contato *pessoa)
           }
           else if (current->next == NULL || pos == 0)
           {
-               head = newcontato;
+               lista->head = newcontato;
                current->previous = newcontato;
                newcontato->next = current;
                newcontato->previous = NULL;
@@ -218,6 +206,8 @@ void showMenu()
 
 int main()
 {
+     struct header lista;
+     initLista(&lista);
      struct contato *pessoa = (struct contato *)malloc(sizeof(struct contato));
      int opcao, posicao;
      bool flag = true;
@@ -234,20 +224,21 @@ int main()
                scanf("%s", pessoa->email);
                printf("Digite o telefone: ");
                scanf("%s", pessoa->telefone);
-               addContatoEmPosicao(pessoa);
+               int pos = getNovaPosicao(pessoa, &lista);
+               addContatoEmPosicao(pessoa, pos, &lista);
                break;
           case 2:
                printf("Digite a posicao: ");
                scanf("%d", &posicao);
-               getContato(posicao);
+               getContato(posicao, &lista);
                break;
           case 3:
                printf("Digite a posicao: ");
                scanf("%d", &posicao);
-               deleteContato(posicao);
+               deleteContato(posicao, &lista);
                break;
           case 4:
-               displayLista();
+               displayLista(&lista);
                break;
           case 5:
                flag = false;
