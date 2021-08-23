@@ -150,9 +150,6 @@ int getNovaPosicao(struct contato *newcontato, struct header *lista)
 
 void addContatoEmPosicao(struct contato *pessoa, int pos, struct header *lista)
 {
-     // int pos = getNovaPosicao(pessoa, &lista);
-
-     // printf("\n POSICAO: %d \n", pos);
 
      struct contato *newcontato = (struct contato *)malloc(sizeof(struct contato));
      struct contato *temp = (struct contato *)malloc(sizeof(struct contato));
